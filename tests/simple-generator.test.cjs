@@ -1,0 +1,16 @@
+const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert');
+const ctx={window:{},crypto:require('crypto').webcrypto,localStorage:{getItem:()=>null},document:{addEventListener(){}},URL,URLSearchParams,Blob,TextEncoder};vm.createContext(ctx);
+for(const f of ['data.js','stakeholders.js','plan-data.js','studio.js','generator.js'])vm.runInContext(fs.readFileSync(path.join(__dirname,'../dist',f),'utf8'),ctx);
+const D=ctx.window.MANEGE,P=ctx.window.MANEGE_PLAN,G=ctx.window.ManegeGenerator,E=G.engine,S=ctx.window.ManegeStudio;
+const imported={id:'other',name:'My imported design',base:{builtin:false,uri:'data:image/svg+xml,test',viewBox:[0,0,100,100]},camera:[200,200,1,1],objects:[],scale:null};
+const before=JSON.stringify(imported),seed=E.automaticSeed(imported),plan=E.automaticPlan(seed,{stakeholders:['IVN','KNNV'],boosted:[]});
+assert(plan.ok&&plan.objects.some(o=>o.generated&&o.type==='room'));assert.equal(plan.outputScale,null);assert.equal(seed.base.contour.w,P.contour.w);assert.equal(JSON.stringify(imported),before);assert(plan.config.automatic);
+const out={...seed,id:'out',objects:plan.objects,generation:{config:plan.config,conflicts:plan.hardConflicts},scale:plan.outputScale};S.validate({version:3,active:out.id,variants:[out]});assert.equal(E.check(out).geometry.length,0);assert.equal(E.check(out).assessments.length,39);assert(E.check(out).alerts.some(a=>a.includes('Schaal ontbreekt')));
+assert(!G.template().includes('type="number"'));assert(!G.template().includes('gen-settings'));assert(G.template().includes('Genereer slimme indeling'));
+const hard=E.criteria({...E.defaults(seed),priorities:{I01:0}}).find(w=>w.id==='I01');assert.equal(hard.effectivePriority,3);
+const baseRequest=E.requests('A',{...plan.config,boosted:[]}).find(r=>r.wishIds.includes('I01'));const boosted=E.requests('A',{...plan.config,boosted:['I01']}).find(r=>r.wishIds.includes('I01'));assert(boosted.weight>baseRequest.weight);assert.equal(boosted.rank,baseRequest.rank);
+const calibrated={...seed,id:'standard',scale:2,scaleNote:'Door gebruiker gekalibreerd'};assert.equal(E.automaticSeed(imported,[calibrated]).scale,2);
+const one=E.automaticPlan(seed,{stakeholders:['KNNV'],boosted:['K03']});assert.equal(E.check({...seed,objects:one.objects,generation:{config:one.config}}).assessments.length,18);
+const conflict=E.solve({...seed,scale:1},{...plan.config,zone:{x:15,y:4,w:2,h:2},minAreas:{zaal:5000}},'A');assert(conflict.ok&&conflict.hardConflicts.length);assert(!conflict.objects.some(o=>o.type==='room'&&o.function==='zaal'));
+assert.equal(JSON.stringify(D.wishes).includes('TEST-'),false);
+console.log('PASS: uncalibrated/imported design generates against standard source without questions; indicative scale retained; hard requirements cannot be downgraded; optional boosts; existing calibration; stakeholder selection; partial conflicts; unchanged input and valid editable output.');

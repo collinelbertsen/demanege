@@ -21,6 +21,7 @@ jobs:
       - run: node tests/stakeholders.test.cjs
       - run: node tests/simple-generator.test.cjs
       - run: node tests/research-store.test.cjs
+      - run: node tests/two-buildings.test.cjs
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

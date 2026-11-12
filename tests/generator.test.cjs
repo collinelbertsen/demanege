@@ -1,8 +1,8 @@
 const fs=require('fs'),vm=require('vm'),assert=require('assert');
 const ctx={window:{},crypto:require('crypto').webcrypto,localStorage:{getItem:()=>null},document:{addEventListener(){}},URL,Blob,TextEncoder,console};vm.createContext(ctx);
-for(const f of ['data.js','plan-data.js','studio.js','generator.js'])vm.runInContext(fs.readFileSync(require('path').join(__dirname,'../dist/')+f,'utf8'),ctx);
+for(const f of ['data.js','plan-data.js','plan-geometry.js','studio.js','generator.js'])vm.runInContext(fs.readFileSync(require('path').join(__dirname,'../dist/')+f,'utf8'),ctx);
 const E=ctx.window.ManegeGenerator.engine,P=ctx.window.MANEGE_PLAN,D=ctx.window.MANEGE;
-const base={id:'fixture',name:'Testbron',base:{builtin:true,contour:JSON.parse(JSON.stringify(P.contour)),viewBox:P.viewBox,uri:'data:image/svg+xml,'},camera:P.viewBox,scale:1,objects:[]};
+const base={id:'fixture',name:'Testbron',base:{builtin:true,contour:{x:4,y:4,w:42.12,h:28.03},viewBox:P.viewBox,uri:'data:image/svg+xml,'},camera:P.viewBox,scale:1,objects:[]};
 const c=E.defaults(base);c.confirmed=true;
 assert.equal(E.criteria(c).length,D.wishes.length);
 const shapes=[];

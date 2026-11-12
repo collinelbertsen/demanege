@@ -4,3 +4,6 @@ body:has(.studio) main{max-width:1700px;padding-inline:22px}.studio svg.board:fo
 @media(max-width:650px){body:has(.studio) main{padding:14px 10px}.studio .three{grid-template-columns:1fr}.studio .tools{display:grid;grid-template-columns:1fr 1fr;gap:5px}.studio .tools h3,.studio .tools details,.studio .tools .underlaycontrols{grid-column:1/-1}.studio .tools button{margin:0}.studio .inspector{grid-column:auto;display:block}.studio svg.board{height:460px}.studio .bar{gap:5px}.studio .bar .btn{padding:7px}.studio .bar input[type=text]{width:135px}.studio h1{font-size:24px}.studio .stagefoot{font-size:10px}}
 
 .studio-dialog{border:1px solid #abc0a2;border-radius:14px;padding:24px;color:var(--ink);max-width:500px;width:calc(100% - 30px)}.studio-dialog::backdrop{background:#12352870}.studio-dialog label{display:block;font-size:12px}.studio-dialog input{width:100%;margin:8px 0 16px}.dialog-actions{display:flex;gap:10px;justify-content:flex-end}
+
+/* Keep the complete two-building sheet visible in shorter viewports. */
+.studio svg.board{max-height:calc(100dvh - 260px);min-height:280px}

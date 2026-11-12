@@ -7,3 +7,30 @@ body:has(.studio) main{max-width:1700px;padding-inline:22px}.studio svg.board:fo
 
 /* Keep the complete two-building sheet visible in shorter viewports. */
 .studio svg.board{max-height:calc(100dvh - 260px);min-height:280px}
+
+/* Drawing-first workspace. Tools float over the canvas; data gets one quarter. */
+body:has(.studio) main{max-width:none;padding:6px 12px 18px}
+body:has(.studio) .top{padding-block:8px}
+body:has(.studio) main>.crumbs,body:has(.studio) .footer{display:none}
+.studio .studiohead{margin:3px 0;gap:8px}.studio h1{font-size:20px;margin:0}.studio .eyebrow{display:none}
+.studio .underlay-note{font-size:10px;max-width:none;line-height:1.3;margin:4px 0}
+.studio .bar{padding:4px;margin:3px 0;gap:4px}.studio .btn{padding:6px 8px;min-height:34px}
+.studio .three{position:relative;display:grid!important;grid-template-columns:minmax(0,3.2fr) minmax(240px,1fr)!important;gap:8px;align-items:stretch}
+.studio .three.hide-inspector{grid-template-columns:minmax(0,1fr)!important}.studio .three.hide-inspector>.inspector{display:none!important}
+.studio .three>.tools{position:absolute;left:8px;top:50px;width:215px;max-height:70dvh;overflow:auto;z-index:12;box-shadow:0 8px 25px #16382b30}
+.studio .three.hide-tools>.tools{display:none!important}.studio .three>div{min-width:0}
+.studio .inspector{display:block;grid-column:auto;overflow:auto;max-height:calc(100dvh - 225px);padding:10px}
+.studio svg.board{height:calc(100dvh - 275px);max-height:none;min-height:390px}
+.studio .stage{border-radius:8px}.studio .stagefoot{padding:5px 9px}
+.studio .legendline,.studio .notice{display:none}.studio .toast{padding:2px 8px;margin:2px 0;min-height:0;font-size:10px}
+.studio .quick-tools{display:flex;gap:4px;flex-wrap:wrap;margin:3px 0}.studio .quick-tools .active{background:var(--green);color:white}
+.studio .filemenu{position:relative;display:inline-block;font-size:11px;margin:2px 0}.studio .filemenu>summary{cursor:pointer;padding:4px}
+.studio .filemenu[open]>.bar{position:absolute;top:24px;left:0;z-index:20;width:330px;padding:10px;background:white;border:1px solid var(--line);box-shadow:0 5px 20px #16382b25}
+.studio .source-room-list{margin:10px 0}.studio .source-room-list table{width:100%;font-size:11px;border-collapse:collapse}.studio .source-room-list th,.studio .source-room-list td{padding:5px 3px;border-bottom:1px solid #e2e8de;text-align:left}
+.studio .source-room-list button{border:0;border-radius:4px;background:#edf1e8;min-height:32px;width:100%;cursor:pointer}.studio .source-room-list button[aria-pressed=true]{background:#315c47;color:white}
+.studio .source-properties h2{margin:0 0 8px;font-size:17px}.studio .source-properties h3{font-size:14px}.studio .source-properties p{font-size:12px;line-height:1.4}
+.studio .gen-simple{margin:3px 0}.studio .gen-simple>button{padding:6px 10px}.studio #gen-simple-panel{position:absolute;z-index:25;background:white;border:1px solid var(--line);border-radius:9px;padding:12px;width:min(430px,90vw);max-height:65dvh;overflow:auto;box-shadow:0 8px 25px #16382b30}
+.studio #gen-report>details{max-width:650px}.studio .simple-check-list{max-height:200px;overflow:auto}
+@media(max-width:1000px){.studio .three{grid-template-columns:1fr!important}.studio .three>.inspector{position:absolute;right:8px;top:45px;width:min(330px,85vw);max-height:calc(100dvh - 260px);z-index:15;box-shadow:0 8px 25px #16382b35}.studio svg.board{height:calc(100dvh - 290px);min-height:380px}.studio .viewport-controls{flex-wrap:wrap}}
+@media(max-width:600px){body:has(.studio) main{padding:4px 6px}.studio .underlay-note{display:none}.studio .studiohead a{font-size:10px}.studio .bar .btn{padding:5px;font-size:10px}.studio .bar label{width:100%}.studio .bar select{max-width:78vw}.studio svg.board{height:65dvh;min-height:380px}.studio .three>.inspector{max-height:60dvh}.studio .viewport-controls .btn{min-height:38px}.studio .quick-tools .btn{min-height:38px}.studio .stagefoot{font-size:9px}}
+.studio .underlay-note{display:none}.studio>#generator-root,.studio>.bar,.studio>.filemenu,.studio>.quick-tools{display:inline-flex;vertical-align:middle}.studio>.bar{margin-left:5px}.studio #st-variant{max-width:240px}.studio .viewport-controls [data-act=reference]{display:none}.studio .source-room-list{max-height:330px;overflow:auto}.studio .source-room-list>summary{position:sticky;top:0;background:white;z-index:1}
